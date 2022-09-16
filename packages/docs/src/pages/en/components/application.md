@@ -11,106 +11,76 @@ related:
 
 # Application
 
-In Vuetify, the `v-app` component and the **app** prop on components like `v-navigation-drawer`, `v-app-bar`, `v-footer` and more, help bootstrap your application with the proper sizing around `<v-main>` component. This allows you to create truly unique interfaces without the hassle of managing your layout sizing. The `v-app` component is **REQUIRED** for all applications. This is the mount point for many of Vuetify's components and functionality and ensures that it propagates the default application _variant_ (**dark/light**) to children components and also ensures proper cross-browser support for certain click events in browsers like Safari. `v-app` should only be rendered within your application **ONCE**.
+Application components are the building blocks for creating layouts
 
-<entry />
+![App Entry](https://cdn.vuetifyjs.com/docs/images/components-temp/v-app/v-app-entry.png)
 
-## API
+----
 
-<api-inline />
+## Usage
 
-<alert type="error">
+The `v-app` component serves as a root level layout and theme provider. It replaces the default `<div id="app">` root element that Vue uses to mount and initiate your application. The following markup is a basic example of what your Vue entry file might look like:
 
-  In order for your application to work properly, you **must** wrap it in a `v-app` component. This component is required for ensuring proper **cross-browser compatibility**. Vuetify doesn't support multiple isolated Vuetify instances on a page. `v-app` can exist **anywhere** inside the body of your app, however, there should only be one and it must be the parent of **ALL** Vuetify components.
-
-</alert>
-
-<alert type="info">
-
-  If you are using multiple layouts in your application you will need to ensure each root layout file that will contain Vuetify components has a `v-app` at the root of its template.
-
-</alert>
-
-## Default application markup
-
-This is an example of the default application markup for Vuetify. You can place your layout elements anywhere, as long as you apply the **app** property. The key component to making your page content work together with layout elements is `v-main`. The `v-main` component will be dynamically sized depending upon the structure of your designated **app** components. You can use combinations of any or all of the above components including `v-bottom-navigation`.
-
-When using [vue-router](https://router.vuejs.org/) it is recommended that you place your views inside `v-main`.
-
-```html
-<!-- App.vue -->
-
+```html { data-resource="App.vue" }
 <v-app>
-  <v-navigation-drawer app>
-    <!-- -->
-  </v-navigation-drawer>
+  <v-navigation-drawer></v-navigation-drawer>
 
-  <v-app-bar app>
-    <!-- -->
-  </v-app-bar>
+  <v-app-bar></v-app-bar>
 
-  <!-- Sizes your content based upon application components -->
   <v-main>
-
-    <!-- Provides the application the proper gutter -->
-    <v-container fluid>
-
-      <!-- If using vue-router -->
-      <router-view></router-view>
-    </v-container>
+    <!-- Application content -->
   </v-main>
-
-  <v-footer app>
-    <!-- -->
-  </v-footer>
 </v-app>
 ```
 
+<entry />
+
+## Anatomy
+
+There are 7 components that have [Application](/features/application-layout/) support out of the box.
+
+![App Anatomy](https://cdn.vuetifyjs.com/docs/images/components-temp/v-app/v-app-anatomy.png)
+
+| Element / Area | Description |
+| - | - |
+| 1. [v-app](/api/v-app/) | Root layout component |
+| 2. [v-navigation-drawer](/api/v-navigation-drawer/) | Holds navigation components such as [v-list](/components/lists/) |
+| 3. [v-system-bar](/api/v-system-bar/) | Used to replicate an application window's system bar |
+| 4. [v-app-bar](/api/v-app-bar/) | Used for top level navigation links and application title |
+| 5. [v-main](/api/v-main/) | The main content area |
+| 6. [v-bottom-navigation](/api/v-bottom-navigation/) | Used for top level navigation links on mobile devices |
+| 7. [v-footer](/api/v-footer/) | Contains information and links related to the page. Must use **app** prop |
+
+## API
+
+| Component | Description |
+| - | - |
+| [v-app](/api/v-app/) | Primary component |
+| [v-main](/api/v-main/) | Content area |
+
+## Guide
+
+Vuetify features an application layout system that allows you to easily create complex website designs.
+
+The system is built around an outside-in principle, where each application layout component reserves space for itself in one of four directions&mdash;left, right, up, and down&mdash; leaving the available free space for any subsequent layout component(s) to occupy.
+
+The `v-app` component combines the functionality of the [Application layout](/features/application-layout/) and [Theme providers](/components/theme-providers/) to replace your application's root element.
+
+This guide focuses on the how the `v-app` component is used within your application. For detailed information on the layout service itself and how it positions elements, visit the [Application layout](/features/application-layout/) page.
+
+#### Using layouts
+
+The Vuetify layout system supports a variety of use-cases that range from the ability to nest them multiple times to dynamically changing their composition in real-time. [Application components](#anatomy) automatically bind to the nearest `v-app` or `v-layout` component and are positioned based upon their render order.
+
+### App-bar
+
+A `v-app-bar` is located above the main content and typically used as a container for top level navigation links.
+
+<example file="application/app-bar" />
+
 <alert type="info">
 
-  Applying the **app** prop automatically applies position: **fixed** to the layout element. If your application calls for an _absolute_ element, you can overwrite this functionality by using the **absolute** prop.
-
-</alert>
-
-## Application components
-
-Below is a list of all the components that support the **app** prop and can be used as layout elements in your application. These can be mixed and matched and only **one** of each particular component should exist at any time. You can, however, swap them out and the layout will accommodate. For some examples displaying how you can build various layouts, checkout the [Pre-made layouts](/getting-started/wireframes) page.
-
-Each of these application components have a designated location and order that it affects within the layout system.
-
-- [v-app-bar](/components/app-bars): Is always placed at the top of an application with a lower priority than `v-system-bar`.
-- [v-bottom-navigation](/components/bottom-navigation): Is always placed at the bottom of an application with a higher priority than `v-footer`.
-- [v-footer](/components/footer): Is always placed at the bottom of an application with a lower priority than `v-bottom-navigation`.
-- [v-navigation-drawer](/components/navigation-drawers): Can be placed on the left or right side of an application and can be configured to sit next to or below `v-app-bar`.
-- [v-system-bar](/components/system-bars): Is always placed at the top of an application with higher priority than `v-app-bar`.
-
-<app-img src="https://cdn.vuetifyjs.com/images/layouts/app.png" alt="Vuetify Application" />
-
-## Application service
-
-The **application service** is used to configure your Vuetify layout. It communicates with the `v-main` component so that it's able to properly size the application content. It has a number of properties that can be accessed:
-
-```ts
-{
-  bar: number
-  bottom: number
-  footer: number
-  insetFooter: number
-  left: number
-  right: number
-  top: number
-}
-```
-
-These values are automatically updated when you add and remove components with the **app** prop. They are **NOT** editable and exist in a _READONLY_ state. You can access these values by referencing the application property on the **$vuetify** object.
-
-```js
-console.log(this.$vuetify.application.top) // 56
-```
-
-<alert type="error">
-
-  In order for your application to work properly, you **must** wrap it in a `v-app` component. This component is required for ensuring proper **cross-browser compatibility**. Vuetify doesn't support multiple isolated Vuetify instances on a page. `v-app` can exist **anywhere** inside the body of your app, however, there should only be one and it must be the parent of **ALL** Vuetify components.
+  Application components automatically apply position: **fixed** to the layout element. If your application calls for an _absolute_ element, use the **absolute** prop overwrite this functionality.
 
 </alert>
 
