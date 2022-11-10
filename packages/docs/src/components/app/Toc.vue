@@ -1,6 +1,7 @@
 <template>
   <v-navigation-drawer
     id="app-toc"
+    v-model="app.toc"
     color="background"
     floating
     location="right"
@@ -91,17 +92,20 @@
 
   // Composables
   import { RouteLocation, Router, useRoute, useRouter } from 'vue-router'
+  import { useAppStore } from '@/store/app'
   import { useSponsorsStore } from '@/store/sponsors'
   import { useTheme } from 'vuetify'
 
   // Utilities
-  import { computed, onBeforeMount, ref } from 'vue'
+  import { computed, ref } from 'vue'
 
   type TocItem = {
     to: string;
     text: string;
     level: number;
   }
+
+  const app = useAppStore()
 
   function useUpdateHashOnScroll (route: RouteLocation, router: Router) {
     const scrolling = ref(false)
@@ -211,8 +215,6 @@
   }
 
   const sponsorStore = useSponsorsStore()
-
-  onBeforeMount(async () => sponsorStore.load())
 
   const toc = computed(() => route.meta.toc as TocItem[])
 
