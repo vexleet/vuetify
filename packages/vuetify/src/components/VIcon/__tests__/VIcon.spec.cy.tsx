@@ -1,3 +1,4 @@
+/// <reference types="..\..\..\..\types\cypress" />
 /// <reference types="../../../../types/cypress" />
 
 import { VClassIcon } from '..'

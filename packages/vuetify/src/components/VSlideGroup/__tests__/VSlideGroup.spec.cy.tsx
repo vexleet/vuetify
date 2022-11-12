@@ -1,3 +1,4 @@
+/// <reference types="..\..\..\..\types\cypress" />
 /* eslint-disable sonarjs/no-identical-functions */
 /// <reference types="../../../../types/cypress" />
 
